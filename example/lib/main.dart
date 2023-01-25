@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -34,15 +35,23 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      await _karkinosMantraFingerprintPlugin.getInitMantraDevice();
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      platformVersion= await _karkinosMantraFingerprintPlugin.getDeviceInformation()??"";
+    }
+    on ClientNotFound catch(e){
+      log("${e.code}");
+      platformVersion = 'Install Clinet';
+    }
+     catch(e) {
+      
+      platformVersion = 'Failed to get platform version. $e';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
-    
+    setState(() {
+      _platformVersion=platformVersion;
+    });
   }
 
   @override

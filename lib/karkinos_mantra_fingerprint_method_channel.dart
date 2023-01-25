@@ -20,10 +20,20 @@ class MethodChannelKarkinosMantraFingerprint extends KarkinosMantraFingerprintPl
     return "My Name";
   }
 
-   @override
+  @override
   Future<String?> initDevice() async {
     final version = await methodChannel.invokeMethod<String>('init');
     return version;
   }
 
+  @override
+  Future<String?> captureFingurePrint() async {
+    final result = await methodChannel.invokeMethod<String>('capture');
+    return result;
+  }
+  @override
+  Future<String?> getDeviceInfo() async {
+    final result = await methodChannel.invokeMethod<String>('getDeviceInfo');
+    return result;
+  }
 }

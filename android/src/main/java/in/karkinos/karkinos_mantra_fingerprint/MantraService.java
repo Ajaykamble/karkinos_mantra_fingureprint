@@ -20,14 +20,6 @@ public class MantraService implements MFS100Event {
         System.loadLibrary("MFS100V9032");
     }
 
-    private enum ScannerAction {
-        Capture, Verify
-    }
-
-    byte[] Enroll_Template;
-    byte[] Verify_Template;
-    private FingerData lastCapFingerData = null;
-    ScannerAction scannerAction = ScannerAction.Capture;
     int timeout = 10000;
     MFS100 mfs100 = null;
     private boolean isCaptureRunning = false;
@@ -44,8 +36,6 @@ public class MantraService implements MFS100Event {
     private void SetTextOnUIThread(final String str) {
         Toast.makeText(this.context, str, Toast.LENGTH_LONG).show();
     }
-
-
     private void WriteFile(String filename, byte[] bytes) {
         try {
             String path = Environment.getExternalStorageDirectory()
@@ -185,12 +175,11 @@ public class MantraService implements MFS100Event {
                     if (ret != 0) {
                         throw new Exception(mfs100.GetErrorMsg(ret));
                     } else {
-
                         long unixTime = System.currentTimeMillis() / 1000L;
                         String filename = unixTime+"fingerISO.iso";
+
                         WriteFile(filename,fingerData.ISOTemplate());
                         successCallback.onResult(filename);
-                        //successCallback.invoke(filename);
                     }
                 } catch (Exception ex) {
                     SetTextOnUIThread("Error");
