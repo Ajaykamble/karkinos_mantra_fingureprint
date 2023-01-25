@@ -32,8 +32,8 @@ class MethodChannelKarkinosMantraFingerprint extends KarkinosMantraFingerprintPl
     return result;
   }
   @override
-  Future<String?> getDeviceInfo() async {
-    final result = await methodChannel.invokeMethod<String>('getDeviceInfo');
+  Future<Map<String,dynamic>?> getDeviceInfo() async {
+    final result = await methodChannel.invokeMethod<Map<String,dynamic>>('getDeviceInfo');
     return result;
   }
 }

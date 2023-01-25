@@ -36,7 +36,7 @@ abstract class KarkinosMantraFingerprintPlatform extends PlatformInterface {
   Future<String?> captureFingurePrint(){
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-  Future<String?> getDeviceInfo(){
+  Future<Map<String,dynamic>?> getDeviceInfo(){
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 

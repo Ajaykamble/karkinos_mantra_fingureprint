@@ -35,7 +35,8 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion= await _karkinosMantraFingerprintPlugin.getDeviceInformation()??"";
+      platformVersion= jsonEncode(await _karkinosMantraFingerprintPlugin.getDeviceInformation()??"{}");
+      log("${platformVersion}");
     }
     on ClientNotFound catch(e){
       log("${e.code}");

@@ -36,7 +36,7 @@ class KarkinosMantraFingerprint {
       rethrow;
     }
   }
-  Future<String?> getDeviceInformation() async {
+  Future<Map<String,dynamic>?> getDeviceInformation() async {
     try {
       return await KarkinosMantraFingerprintPlatform.instance.getDeviceInfo();
     } on PlatformException catch (e) {

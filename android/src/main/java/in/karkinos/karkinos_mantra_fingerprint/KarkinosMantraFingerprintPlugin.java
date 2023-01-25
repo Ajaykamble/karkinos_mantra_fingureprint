@@ -133,7 +133,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
               Map<String,String> map= new HashMap<String,String>();
               map.put("device_info",device_info);
               map.put("rd_service_info",rdService);
-              result.success(device_info);
+              result.success(map);
             }
           } catch (Exception e) {
             result.error( "Error", e.getMessage(), "#137 parsing");
