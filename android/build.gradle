@@ -1,0 +1,64 @@
+group 'in.karkinos.karkinos_mantra_fingerprint'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "4g"
+
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    //JNI Lib Declaration
+    sourceSets.main {
+        jni.srcDirs = [] // This prevents the auto generation of Android.mk
+        jniLibs.srcDir 'src/main/jniLibs' // This is not necessary unless you have precompiled libraries in your project.
+    }
+}
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/mantra.mfs100.jar')
+    //implementation files('C:\\flutter\\bin\\cache\\artifacts\\engine\\android-arm64-release\\flutter.jar')
+
+
+}
+
