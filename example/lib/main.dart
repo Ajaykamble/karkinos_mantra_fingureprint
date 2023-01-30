@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:karkinos_mantra_fingerprint/karkinos_mantra_fingerprint.dart';
 
 void main() {
@@ -22,19 +19,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   String _platformVersion = 'Unknown';
   final _karkinosMantraFingerprintPlugin = KarkinosMantraFingerprint();
 
-  late AnimationController _animationController;
-  late Animation<double> animation;
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 5));
-    animation = Tween<double>(begin: 0, end: 300).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      });
-    _animationController.repeat();
-
-    log("called");
     initPlatformState();
     //getVerion();
   }
@@ -84,7 +71,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+              child: Text('Running on: $_platformVersion\n'),
         ),
       ),
     );

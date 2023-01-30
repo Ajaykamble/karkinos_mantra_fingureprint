@@ -44,7 +44,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     this.result=result;
-
+    String arguments=call.argument("pidOptions");
     switch(call.method)
     {
       case "init":
@@ -55,7 +55,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
         result.success("Android " + android.os.Build.VERSION.RELEASE);
       break;
       case "getName":
-        String arguments=call.argument("pidOptions");
+        
         result.success("hello"+arguments);
         break;
       case "getDeviceInfo":
@@ -71,7 +71,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
         try {
           Intent intent2 = new Intent();
           intent2.setAction("in.gov.uidai.rdservice.fp.CAPTURE");
-          intent2.putExtra("PID_OPTIONS", "");
+          intent2.putExtra("PID_OPTIONS", arguments);
           act.startActivityForResult(intent2, 2);
         }catch (Exception e){
           result.error( "ClientNotFound", e.getMessage(), "Install Client Application");
