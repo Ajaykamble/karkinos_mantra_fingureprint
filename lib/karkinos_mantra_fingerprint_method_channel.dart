@@ -16,8 +16,9 @@ class MethodChannelKarkinosMantraFingerprint extends KarkinosMantraFingerprintPl
   }
 
   @override
-  Future<String?> getName() async {
-    return "My Name";
+  Future<String?> getName(String pidOptions) async {
+    final version = await methodChannel.invokeMethod<String>('getName',{"pidOptions":pidOptions});
+    return version;
   }
 
   @override
@@ -27,8 +28,8 @@ class MethodChannelKarkinosMantraFingerprint extends KarkinosMantraFingerprintPl
   }
 
   @override
-  Future<String?> captureFingurePrint() async {
-    final result = await methodChannel.invokeMethod<String>('capture');
+  Future<String?> captureFingurePrint(String pidOptions) async {
+    final result = await methodChannel.invokeMethod<String>('capture',{"pidOptions":pidOptions});
     return result;
   }
   @override

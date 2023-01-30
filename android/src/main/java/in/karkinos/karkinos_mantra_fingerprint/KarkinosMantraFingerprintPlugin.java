@@ -44,6 +44,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     this.result=result;
+
     switch(call.method)
     {
       case "init":
@@ -53,6 +54,10 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
       case "getPlatformVersion":
         result.success("Android " + android.os.Build.VERSION.RELEASE);
       break;
+      case "getName":
+        String arguments=call.argument("pidOptions");
+        result.success("hello"+arguments);
+        break;
       case "getDeviceInfo":
         try {
           Intent intent = new Intent();
@@ -146,7 +151,7 @@ public class KarkinosMantraFingerprintPlugin implements FlutterPlugin, MethodCal
             if (data != null) {
               String intentResult = data.getStringExtra("PID_DATA");
               if (intentResult != null) {
-                result.success("Success : "+intentResult);
+                result.success(intentResult);
               }
               else{
                 result.error( "error", "Received Data Null", "PID DATA IS NULL");

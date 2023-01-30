@@ -13,9 +13,18 @@ class KarkinosMantraFingerprint {
     KarkinosMantraFingerprintPlatform.instance.initDevice();
   }
 
-  Future<String?> captureFingurePrint() async {
+  Future<String?> getName(pidOptions)async{
+    try{
+      return await KarkinosMantraFingerprintPlatform.instance.getName(pidOptions);
+    }
+    catch(e){
+      rethrow;
+    }
+  }
+
+  Future<String?> captureFingurePrint({required String pidOptions}) async {
     try {
-      return await KarkinosMantraFingerprintPlatform.instance.captureFingurePrint();
+      return await KarkinosMantraFingerprintPlatform.instance.captureFingurePrint(pidOptions);
     } on PlatformException catch (e) {
       String? code = e.code;
       String? message = e.message;

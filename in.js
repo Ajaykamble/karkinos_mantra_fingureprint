@@ -1,5 +1,4 @@
 function getAadhaar() {  //Intialisation function for getting Aadhaar information
-    if (validated == 1) {
 
 
         let deviceInfo = ""
@@ -7,8 +6,7 @@ function getAadhaar() {  //Intialisation function for getting Aadhaar informatio
         let port = 11100
         let portfetch = ""
         do {  // It will search for devices and services for device sdk ,Fetch on Different Ports from 11100 to 11120
-            if (
-                (getJSON_rdser(port, function (pidoptions, RDService, portfetch) { //Get device and Pid options from devic
+            if ((getJSON_rdser(port, function (pidoptions, RDService, portfetch) { //Get device and Pid options from devic
 
                     // Pid options will provide device information for authentication purposes the device info,port ,dev capability
                     if (null != pidoptions && 0 != pidoptions) {
@@ -45,7 +43,7 @@ function getAadhaar() {  //Intialisation function for getting Aadhaar informatio
             }
             port += 1;
         } while (port < 11120);
-    }
+    
 }
 
 function getPidData() {

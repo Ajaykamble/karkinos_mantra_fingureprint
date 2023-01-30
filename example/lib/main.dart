@@ -18,15 +18,37 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   String _platformVersion = 'Unknown';
   final _karkinosMantraFingerprintPlugin = KarkinosMantraFingerprint();
 
+  late AnimationController _animationController;
+  late Animation<double> animation;
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 5));
+    animation = Tween<double>(begin: 0, end: 300).animate(_animationController)
+      ..addListener(() {
+        setState(() {});
+      });
+    _animationController.repeat();
+
     log("called");
     initPlatformState();
+    //getVerion();
+  }
+
+  Future<void> getVerion() async {
+    try {
+      String platformVersion;
+      platformVersion = await _karkinosMantraFingerprintPlugin.getPlatformVersion() ?? "";
+      setState(() {
+        _platformVersion = platformVersion;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -35,15 +57,14 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion= jsonEncode(await _karkinosMantraFingerprintPlugin.getDeviceInformation()??"{}");
+      String wadh = "E0jzJ/P8UopUHAieZn8CKqS4WPMi5ZSYXgfnlfkWjrc=";
+      String pidoptions = '<PidOptions ver="1.0"> <Opts fCount="1" fType="2" pCount="0" format="0" pidVer="2.0" wadh=\'' + wadh + '\' timeout="20000"  posh="UNKNOWN" env="P" /> </PidOptions>';
+      platformVersion = await _karkinosMantraFingerprintPlugin.captureFingurePrint(pidOptions: pidoptions) ?? "";
       log("${platformVersion}");
-    }
-    on ClientNotFound catch(e){
+    } on ClientNotFound catch (e) {
       log("${e.code}");
       platformVersion = 'Install Clinet';
-    }
-     catch(e) {
-      
+    } catch (e) {
       platformVersion = 'Failed to get platform version. $e';
     }
 
@@ -51,7 +72,7 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     setState(() {
-      _platformVersion=platformVersion;
+      _platformVersion = platformVersion;
     });
   }
 
